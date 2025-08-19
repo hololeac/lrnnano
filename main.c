@@ -18,7 +18,7 @@ int main() {
     // Main input loop
     while (1) {
         ch = getch();
-        if (ch == ':' && (ch & 0x1F)) {
+        if (ch == ('x' & 0x1F)) {
             clear();
             refresh();
             endwin();
