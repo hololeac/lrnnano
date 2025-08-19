@@ -1,0 +1,4 @@
+the test text to test
+the ability of me.
+reading files...
+hours spent: 1.5.
