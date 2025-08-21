@@ -3,6 +3,7 @@
 typedef struct {
     char *line;
     int len;
+    int count;
 } line_t;
 
 typedef struct {

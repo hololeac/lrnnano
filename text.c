@@ -45,19 +45,22 @@ void add_line(char *string, text_t *content) {
         content = add_more_lines(content);
     }
 
-    size_t line_len = strlen(string) + 1;
+    size_t line_len = strcspn(string, "\r\n");
 
     line_t *line = malloc(sizeof(line_t));
-    char *str = malloc(sizeof(char) * line_len);
+    char *str = malloc(sizeof(char) * (line_len + 1) * 2);
 
     if (line == NULL || str == NULL) {
+        free(line);
+        free(str);
         free_content(content);
         exit(1);
     }
 
-    strcpy(str, string);
+    memcpy(str, string, line_len);
     line->line = str;
-    line->len = line_len - 1;
+    line->len = line_len;
+    line->count = (line_len + 1) * 2;
 
 
     content->lines[content->count] = line;
@@ -65,8 +68,14 @@ void add_line(char *string, text_t *content) {
 }
 
 void free_content(text_t *content) {
+    if (content == NULL) {
+        return;
+    }
     for (int i = 0; i < content->len; i++) {
-        free(content->lines[i]);
+        if (content->lines[i]) {
+            free(content->lines[i]->line);
+            free(content->lines[i]);
+        }
     }
 
     free(content->lines);
