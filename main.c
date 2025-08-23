@@ -43,19 +43,25 @@ int main() {
             return 0;
         }
 
-        // if (ch == KEY_LEFT) {
-        //     if (col > 0) --col;
-        //     move(row, col);
-        // } else if (ch == KEY_RIGHT) {
-        //     if (col < COLS - 1) ++col;
-        //     move(row, col);
-        // } else if (ch == KEY_UP) {
-        //     if (row > 2) --row;   // don't overwrite the instruction line(s)
-        //     move(row, col);
-        // } else if (ch == KEY_DOWN) {
-        //     if (row < LINES - 1) ++row;
-        //     move(row, col);
-        // }
+        if (ch == KEY_LEFT) {
+            if (col > 0) {
+                col--;
+                move(row, col);
+            } else if (row > 0) {
+                row--;
+                col = content->lines[row]->len;
+                move(row, col);
+            }
+        } else if (ch == KEY_RIGHT) {
+            if (col < COLS - 1) col++;
+            move(row, col);
+        } else if (ch == KEY_UP) {
+            if (row > 0) row--;
+            move(row, col);
+        } else if (ch == KEY_DOWN) {
+            if (row < LINES - 1) row--;
+            move(row, col);
+        }
 
         getyx(stdscr, row, col);
         refresh();
