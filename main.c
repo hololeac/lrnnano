@@ -53,8 +53,15 @@ int main() {
                 move(row, col);
             }
         } else if (ch == KEY_RIGHT) {
-            if (col < COLS - 1) col++;
-            move(row, col);
+            //TODO: fix the seg fault for accessing the line that not exist
+            if (col < content->lines[row]->len) {
+                col++;
+                move(row, col);
+            } else if (row < content->count) {
+                row++;
+                col = 0;
+                move(row, col);
+            }
         } else if (ch == KEY_UP) {
             if (row > 0) row--;
             move(row, col);
