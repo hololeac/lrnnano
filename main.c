@@ -23,6 +23,7 @@ int main() {
     int ch;
     int row = 0;
     int col = 0;
+    int remember_x_pos = 0;
 
     refresh();
 
@@ -46,28 +47,35 @@ int main() {
         if (ch == KEY_LEFT) {
             if (col > 0) {
                 col--;
+                remember_x_pos = col;
                 move(row, col);
             } else if (row > 0) {
                 row--;
-                col = content->lines[row]->len;
+                col = content->lines[row]->count;
+                remember_x_pos = col;
                 move(row, col);
             }
         } else if (ch == KEY_RIGHT) {
-            //TODO: fix the seg fault for accessing the line that not exist
-            if (col < content->lines[row]->len) {
+            if (content->lines[row] != NULL && col < content->lines[row]->count) {
                 col++;
+                remember_x_pos = col;
                 move(row, col);
             } else if (row < content->count) {
                 row++;
                 col = 0;
+                remember_x_pos = col;
                 move(row, col);
             }
         } else if (ch == KEY_UP) {
-            if (row > 0) row--;
-            move(row, col);
+            if (row > 0) {
+                row--;
+                move(row, col);
+            }
         } else if (ch == KEY_DOWN) {
-            if (row < LINES - 1) row--;
-            move(row, col);
+            if (row < LINES - 1) {
+                row--;
+                move(row, col);
+            }
         }
 
         getyx(stdscr, row, col);

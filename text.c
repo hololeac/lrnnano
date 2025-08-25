@@ -9,6 +9,10 @@ text_t *initialize_content() {
         exit(1);
     }
 
+    for (int i = 0; i < 8; i++) {
+        empty_lines[i] = NULL;
+    }
+
     text_t *new_content = malloc(sizeof(text_t));
 
     if (new_content == NULL) {
@@ -29,6 +33,10 @@ text_t *add_more_lines(text_t *content) {
     if (new_lines == NULL) {
         free_content(content);
         exit(1);
+    }
+
+    for (int i = content->count - 1; i < content->len; i++) {
+        new_lines[i] = NULL;
     }
 
     content->lines = new_lines;
@@ -59,8 +67,8 @@ void add_line(char *string, text_t *content) {
 
     memcpy(str, string, line_len);
     line->line = str;
-    line->len = line_len;
-    line->count = (line_len + 1) * 2;
+    line->len = (line_len + 1) * 2;
+    line->count = line_len;
 
 
     content->lines[content->count] = line;
