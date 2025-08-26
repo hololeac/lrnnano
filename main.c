@@ -76,6 +76,12 @@ int main() {
                 row--;
                 move(row, col);
             }
+        } else {
+            add_ch(content, ch, row, col);
+            clrtoeol();
+            addstr(content->lines[row]->line);
+            move(row, col);
+            refresh();
         }
 
         getyx(stdscr, row, col);

@@ -89,3 +89,10 @@ void free_content(text_t *content) {
     free(content->lines);
     free(content);
 }
+
+void add_ch(text_t *content, char ch, int row, int col) {
+    if (content->lines[row] != NULL && content->lines[row]->count < content->lines[row]->len) {
+        memmove(content->lines[row]->line + col + 1, content->lines[row]->line + col, (size_t)content->lines[row]->count - col + 1);
+        content->lines[row]->line[col] = ch;
+    }
+}

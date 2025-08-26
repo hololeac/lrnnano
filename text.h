@@ -16,3 +16,4 @@ void add_line(char *string, text_t *content);
 text_t *initialize_content();
 text_t *add_more_lines(text_t *content);
 void free_content(text_t *content);
+void add_ch(text_t* content, char ch, int row, int col);
