@@ -91,8 +91,27 @@ void free_content(text_t *content) {
 }
 
 void add_ch(text_t *content, char ch, int row, int col) {
-    if (content->lines[row] != NULL && content->lines[row]->count < content->lines[row]->len) {
-        memmove(content->lines[row]->line + col + 1, content->lines[row]->line + col, (size_t)content->lines[row]->count - col + 1);
-        content->lines[row]->line[col] = ch;
+    if (content == NULL) {
+        return;
+    }
+
+    line_t *ln = content->lines[row];
+
+    //TODO: segfault when col is finished and new column is in place if the new line is empty.
+    //TODO: weird behaviour if previous but new line is present and you keep typing untill line has to be widened.
+    if (ln != NULL && ln->count < ln->len) {
+        memmove(ln->line + col + 1, ln->line + col, (size_t)ln->count - col + 1);
+        ln->line[col] = ch;
+        ln->count++;
+    } else if (ln->count == ln->len) {
+        int new_len = ln->len + 64;
+        char *tmp = realloc(ln->line, sizeof(char) * new_len);
+
+        if (tmp == NULL) {
+            return;
+        }
+
+        ln->line = tmp;
+        ln->len = new_len;
     }
 }

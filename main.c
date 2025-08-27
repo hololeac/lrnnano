@@ -66,6 +66,7 @@ int main() {
                 remember_x_pos = col;
                 move(row, col);
             }
+
         } else if (ch == KEY_UP) {
             if (row > 0) {
                 row--;
@@ -78,8 +79,10 @@ int main() {
             }
         } else {
             add_ch(content, ch, row, col);
+            move(row, 0);
             clrtoeol();
             addstr(content->lines[row]->line);
+            col++;
             move(row, col);
             refresh();
         }
