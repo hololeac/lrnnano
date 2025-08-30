@@ -97,9 +97,10 @@ void add_ch(text_t *content, char ch, int row, int col) {
 
     line_t *ln = content->lines[row];
 
+    //TODO: when adding to the last line and it is full you can add only 4 chars then it breaks
+
     //TODO: add line in the top of the file feature
     //TODO: when you type and line is finished an you go to th next - don't append the existing one, insert a new line with memmove
-    //TODO: segfault when col is finished and new column is in place if the new line is empty.
     //TODO: weird behaviour if previous but new line is present and you keep typing untill line has to be widened.
     if (ln != NULL && ln->count < ln->len) {
         memmove(ln->line + col + 1, ln->line + col, (size_t)ln->count - col + 1);
