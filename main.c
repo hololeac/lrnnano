@@ -69,7 +69,7 @@ int main() {
 
         } else if (ch == KEY_UP) {
             if (row > 0) {
-                row--;
+                row++;
                 move(row, col);
             }
         } else if (ch == KEY_DOWN) {

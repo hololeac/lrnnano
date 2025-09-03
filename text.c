@@ -97,7 +97,8 @@ void add_ch(text_t *content, char ch, int row, int col) {
 
     line_t *ln = content->lines[row];
 
-    //TODO: when adding to the last line and it is full you can add only 4 chars then it breaks
+    //TODO: weird bug when typyng on the last line sometimes special char appears.
+    //TODO: when typying and going out of bouds on the last line the line disappears and then rewritten with new stuff
 
     //TODO: add line in the top of the file feature
     //TODO: when you type and line is finished and you go to the next - don't append the existing one, insert a new line with memmove
@@ -110,13 +111,15 @@ void add_ch(text_t *content, char ch, int row, int col) {
         if (content->len == content->count) {
             content = add_more_lines(content);
         } else {
-            char string[1];
-            string[0] = ch;
-            add_line(string, content);
+            char *str = calloc(2, sizeof(char));
+            str[0] = ch;
+            add_line(str, content);
+            free(str);
         }
     } else if (ln->count == ln->len) {
         int new_len = ln->len + 64;
         char *tmp = realloc(ln->line, sizeof(char) * new_len);
+        tmp[ln->len] = ch;
 
         if (tmp == NULL) {
             return;
