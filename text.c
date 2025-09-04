@@ -98,7 +98,7 @@ void add_ch(text_t *content, char ch, int row, int col) {
     line_t *ln = content->lines[row];
 
     //TODO: weird bug when typyng on the last line sometimes special char appears.
-    //TODO: when typying and going out of bouds on the last line the line disappears and then rewritten with new stuff
+    //TODO: when typing and going out of bouds on the last line the line disappears and then rewritten with new stuff
 
     //TODO: add line in the top of the file feature
     //TODO: when you type and line is finished and you go to the next - don't append the existing one, insert a new line with memmove
