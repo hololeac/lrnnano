@@ -102,7 +102,7 @@ void add_ch(text_t *content, char ch, int row, int col) {
 
     //TODO: add line in the top of the file feature
     //TODO: when you type and line is finished and you go to the next - don't append the existing one, insert a new line with memmove
-    //TODO: weird behaviour if previous but new line is present and you keep typing untill line has to be widened.
+    //TODO: weird behaviour if previous line is full but new line is present and you keep typing untill the next line is full.
     if (ln != NULL && ln->count < ln->len) {
         memmove(ln->line + col + 1, ln->line + col, (size_t)ln->count - col + 1);
         ln->line[col] = ch;
