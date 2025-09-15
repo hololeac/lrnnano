@@ -90,6 +90,7 @@ void free_content(text_t *content) {
     free(content);
 }
 
+//TODO: when you type and line is finished and you go to the next - don't append the existing one, insert a new line with memmove
 void add_ch(text_t *content, char ch, int row, int col) {
     if (content == NULL) {
         return;
@@ -101,11 +102,11 @@ void add_ch(text_t *content, char ch, int row, int col) {
 
     line_t *ln = content->lines[row];
 
-    //TODO: when typing and going out of bouds on the last line the line disappears and then rewritten with new stuff
-
     //TODO: add line in the top of the file feature
-    //TODO: when you type and line is finished and you go to the next - don't append the existing one, insert a new line with memmove
+
     //TODO: weird behaviour if previous line is full but new line is present and you keep typing untill the next line is full.
+    //TODO: same as above but also weird even before the next line is full
+    //TODO: add text on the 2nd line, 3d one is being rewritten, then reappears and text is being appended. seems the same bug for all 3
     if (ln != NULL && ln->count < ln->len) {
         memmove(ln->line + col + 1, ln->line + col, (size_t)ln->count - col + 1);
         ln->line[col] = ch;
