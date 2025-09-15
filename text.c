@@ -95,6 +95,10 @@ void add_ch(text_t *content, char ch, int row, int col) {
         return;
     }
 
+    if (content->len == content->count) {
+        content = add_more_lines(content);
+    }
+
     line_t *ln = content->lines[row];
 
     //TODO: when typing and going out of bouds on the last line the line disappears and then rewritten with new stuff
@@ -107,15 +111,10 @@ void add_ch(text_t *content, char ch, int row, int col) {
         ln->line[col] = ch;
         ln->count++;
     } else if (ln == NULL) {
-        if (content->len == content->count) {
-            content = add_more_lines(content);
-            //TODO: after add more lines don't forget to add a char!!!
-        } else {
-            char *str = calloc(2, sizeof(char));
-            str[0] = ch;
-            add_line(str, content);
-            free(str);
-        }
+        char *str = calloc(2, sizeof(char));
+        str[0] = ch;
+        add_line(str, content);
+        free(str);
     } else if (ln->count == ln->len) {
         int new_len = ln->len + 64;
         char *tmp = realloc(ln->line, sizeof(char) * new_len);
