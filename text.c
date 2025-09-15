@@ -119,8 +119,8 @@ void add_ch(text_t *content, char ch, int row, int col) {
     } else if (ln->count == ln->len) {
         int new_len = ln->len + 64;
         char *tmp = realloc(ln->line, sizeof(char) * new_len);
-        //TODO: this will work only if tha char will be added last!!
-        tmp[ln->len] = ch;
+        memmove(tmp + col + 1, tmp + col, strlen(tmp) - col);
+        tmp[col] = ch;
 
         if (tmp == NULL) {
             return;
