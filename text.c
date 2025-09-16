@@ -108,9 +108,16 @@ void add_ch(text_t *content, char ch, int row, int col) {
     //TODO: same as above but also weird even before the next line is full
     //TODO: add text on the 2nd line, 3d one is being rewritten, then reappears and text is being appended. seems the same bug for all 3
     if (ln != NULL && ln->count < ln->len) {
-        memmove(ln->line + col + 1, ln->line + col, (size_t)ln->count - col + 1);
-        ln->line[col] = ch;
-        ln->count++;
+        if (ln->count < max_x) {
+            memmove(ln->line + col + 1, ln->line + col, (size_t)ln->count - col + 1);
+            ln->line[col] = ch;
+            ln->count++;
+        } else {
+            add_ch(content, ln->line[ln->count - 1], row + 1, 0);
+            ln->line[ln->count - 1] = '\0';
+            memmove(ln->line + col + 1, ln->line + col, ln->count - col + 1);
+            ln->line[col] = ch;
+        }
     } else if (ln == NULL) {
         char *str = calloc(2, sizeof(char));
         str[0] = ch;

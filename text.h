@@ -1,5 +1,8 @@
 #pragma once
 
+extern int max_x;
+extern int max_y;
+
 typedef struct {
     char *line;
     int len;

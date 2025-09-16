@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "text.h"
 
+int max_x = 0;
+int max_y = 0;
+
 int main() {
     FILE *fptr;
     text_t *content = initialize_content();
@@ -16,6 +19,7 @@ int main() {
     // Close the file
     fclose(fptr);
     initscr();
+    getmaxyx(stdscr, max_y, max_x);
     raw();
     keypad(stdscr, TRUE);
     noecho();
@@ -82,6 +86,18 @@ int main() {
             move(row, 0);
             clrtoeol();
             addstr(content->lines[row]->line);
+
+            // Update the next string if you are going to the next string.
+            // TODO: redo this because it won't work if:
+            // 1: you add the char on string 1 but string 2 is also full so you
+            // actually pushing string 3
+            // 2: you will implement multiple strings paste
+            if (content->lines[row]->count == max_x) {
+                move(row + 1, 0);
+                clrtoeol();
+                addstr(content->lines[row + 1]->line);
+            }
+
             col++;
             move(row, col);
             refresh();
